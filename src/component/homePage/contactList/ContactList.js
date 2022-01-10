@@ -1,14 +1,17 @@
-import React from 'react';
-import ContactItem from '../contactItem/ContactItem';
-import styles from './ContactList.module.css';
+import React from "react";
+import ContactItem from "../contactItem/ContactItem";
+import styles from "./ContactList.module.css";
 
 const ContactList = () => {
   return (
     <div className={styles.ContactList}>
-      <h1>contact list in Contact list</h1>
-      <ContactItem />
-      <ContactItem />
-      <ContactItem />
+      <div className={styles.OnContactList}>
+        <span>Ime</span>
+        <span>Prezime</span>
+        <span>Email</span>
+        <span>Br.Telefona</span>
+        <span>Akcija</span>
+      </div>
     </div>
   );
 };
