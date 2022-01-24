@@ -5,6 +5,7 @@ import ButtonContact from "../button/button";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import HomePage from "../homePage/HomePage";
 import About from "../about/About";
+import Contact from "../contact/Contact";
 const Nav = () => {
   return (
     <Router>
@@ -26,7 +27,9 @@ const Nav = () => {
               </Link>
             </li>
             <li>
-              <ButtonContact />
+              <Link className={styles.link} to="/contact">
+                <ButtonContact />
+              </Link>
             </li>
           </ul>
         </div>
@@ -34,6 +37,7 @@ const Nav = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </Router>
   );
