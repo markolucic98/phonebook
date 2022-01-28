@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./HomePage.module.css";
 
 import Box from "@mui/material/Box";
@@ -16,6 +16,7 @@ import Paper from "@mui/material/Paper";
 import { makeStyles } from "@mui/styles";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { v4 as uuidv4 } from "uuid";
 
 const HomePage = () => {
   const useStyles = makeStyles({
@@ -39,17 +40,53 @@ const HomePage = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  function createData(ime, prezime, email, telefon) {
-    return { ime, prezime, email, telefon };
+  const [ime, setIme] = useState("");
+  const [prezime, setPrezime] = useState("");
+  const [email, setEmail] = useState("");
+  const [telefon, setTelefon] = useState("");
+  const [data, setData] = useState(getInitialData());
+  // const [data, setData] = useState([
+  //   {
+  //     id: 1,
+  //     ime: "Marko",
+  //     prezime: "Lucic",
+  //     email: "test@test.com",
+  //     telefon: "5455",
+  //   },
+  // ]);
+
+  const addNew = (id, ime, prezime, email, telefon) => {
+    const newEntry = {
+      id: uuidv4(),
+      ime: ime,
+      prezime: prezime,
+      email: email,
+      telefon: telefon,
+    };
+    setData([...data, newEntry]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addNew(ime, prezime, email, telefon);
+    setOpen(false);
+    setIme("");
+    setPrezime("");
+    setEmail("");
+    setTelefon("");
+  };
+
+  useEffect(() => {
+    const temp = JSON.stringify(data);
+    localStorage.setItem("data", temp);
+  }, [data]);
+
+  function getInitialData() {
+    const temp = localStorage.getItem("data");
+    const savedData = JSON.parse(temp);
+    return savedData || [];
   }
 
-  const rows = [
-    createData("marko", "Markovic", "markomarkovi@gmail.com", "065/292-620"),
-    createData("marko", "Markovic", "markomarkovi@gmail.com", "065/292-620"),
-    createData("marko", "Markovic", "markomarkovi@gmail.com", "065/292-620"),
-    createData("marko", "Markovic", "markomarkovi@gmail.com", "065/292-620"),
-    createData("marko", "Markovic", "markomarkovi@gmail.com", "065/292-620"),
-  ];
   return (
     <div className={styles.home}>
       {/* //div koji sadrzi button za otvaranje modula */}
@@ -93,7 +130,7 @@ const HomePage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {data?.map((row) => (
                 <TableRow
                   key={row.ime}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -107,7 +144,11 @@ const HomePage = () => {
                   <TableCell align="right">
                     {" "}
                     <div className={styles.Action}>
-                      <EditIcon color="primary" fontSize="small" />{" "}
+                      <EditIcon
+                        onClick={handleOpen}
+                        color="primary"
+                        fontSize="small"
+                      />{" "}
                       <DeleteForeverIcon fontSize="small" />
                     </div>{" "}
                   </TableCell>
@@ -121,18 +162,45 @@ const HomePage = () => {
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
+          onSubmit={handleSubmit}
         >
           <Box className={styles.box}>
             <h3>Dodajte Novi</h3>
-            <input type="text" className={styles.Input} placeholder="Ime" />
-            <input type="text" className={styles.Input} placeholder="Prezime" />
-            <input type="text" className={styles.Input} placeholder="Email" />
+            <input
+              type="text"
+              className={styles.Input}
+              placeholder="Ime"
+              id="ime"
+              value={ime}
+              onChange={(e) => setIme(e.target.value)}
+            />
+            <input
+              type="text"
+              className={styles.Input}
+              placeholder="Prezime"
+              id="prezime"
+              value={prezime}
+              onChange={(e) => setPrezime(e.target.value)}
+            />
+            <input
+              type="text"
+              className={styles.Input}
+              placeholder="Email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
             <input
               type="text"
               className={styles.Input}
               placeholder="Broj Telefona"
+              id="telefon"
+              value={telefon}
+              onChange={(e) => setTelefon(e.target.value)}
             />
             <Button
+              type="submit"
+              onClick={handleSubmit}
               variant="contained"
               size="medium"
               style={{
