@@ -1,0 +1,65 @@
+.About {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1140px;
+  width: 100%;
+  background-color: #3faad7;
+  border-radius: 0px 0px 15px 15px;
+  border: 2px solid #fff;
+  color: #fff;
+}
+.About h2 {
+  color: #fff;
+  font-size: 26px;
+}
+.About p {
+  width: 70%;
+  font-size: 19px;
+}
+.imenik {
+  color: #e60000;
+  font-size: 20px;
+}
+.end {
+  color: #e60000;
+  font-size: 20px;
+}
+.ml {
+  font-size: 21px;
+  color: #fff;
+}
+.logo {
+  width: 200px;
+}
+.circle1 {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: fixed;
+  top: 500px;
+  right: 120px;
+  opacity: 0.5;
+}
+.circle2 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: fixed;
+  top: 300px;
+  right: 120px;
+  opacity: 0.5;
+}
+.circle3 {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: #fff;
+  position: fixed;
+  top: 100px;
+  right: 120px;
+  opacity: 0.5;
+}
