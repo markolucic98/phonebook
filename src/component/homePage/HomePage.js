@@ -45,23 +45,15 @@ const HomePage = () => {
   const [email, setEmail] = useState("");
   const [telefon, setTelefon] = useState("");
   const [data, setData] = useState(getInitialData());
-  // const [data, setData] = useState([
-  //   {
-  //     id: 1,
-  //     ime: "Marko",
-  //     prezime: "Lucic",
-  //     email: "test@test.com",
-  //     telefon: "5455",
-  //   },
-  // ]);
+  const [edit, setEdit] = useState("");
 
-  const addNew = (id, ime, prezime, email, telefon) => {
+  const addNew = (ime, prezime, email, telefon) => {
     const newEntry = {
-      id: uuidv4(),
       ime: ime,
       prezime: prezime,
       email: email,
       telefon: telefon,
+      id: uuidv4(),
     };
     setData([...data, newEntry]);
   };
@@ -74,6 +66,23 @@ const HomePage = () => {
     setPrezime("");
     setEmail("");
     setTelefon("");
+  };
+  const handleEdit = (e) => {
+    e.preventDefault();
+    addNew(ime, prezime, email, telefon);
+    setOpen(false);
+    setIme(ime);
+    setPrezime(prezime);
+    setEmail(email);
+    setTelefon(telefon);
+  };
+
+  const deleteUser = (id) => {
+    setData([
+      ...data.filter((user) => {
+        return user.id !== id;
+      }),
+    ]);
   };
 
   useEffect(() => {
@@ -149,7 +158,10 @@ const HomePage = () => {
                         color="primary"
                         fontSize="small"
                       />{" "}
-                      <DeleteForeverIcon fontSize="small" />
+                      <DeleteForeverIcon
+                        fontSize="small"
+                        onClick={() => deleteUser(row.id)}
+                      />
                     </div>{" "}
                   </TableCell>
                 </TableRow>
@@ -216,6 +228,62 @@ const HomePage = () => {
             </Button>
           </Box>
         </Modal>
+        {/* //Edit Modal
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          onSubmit={handleEdit}
+        >
+          <Box className={styles.box}>
+            <h3>Uredi Kontakt</h3>
+            <input
+              type="text"
+              className={styles.Input}
+              id="ime"
+              value={ime}
+              onChange={(e) => setIme(e.target.value)}
+            />
+            <input
+              type="text"
+              className={styles.Input}
+              id="prezime"
+              value={prezime}
+              onChange={(e) => setPrezime(e.target.value)}
+            />
+            <input
+              type="text"
+              className={styles.Input}
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="text"
+              className={styles.Input}
+              id="telefon"
+              value={telefon}
+              onChange={(e) => setTelefon(e.target.value)}
+            />
+            <Button
+              type="submit"
+              onClick={handleEdit}
+              variant="contained"
+              size="medium"
+              style={{
+                width: "50%",
+                borderRadius: "15px",
+                padding: "10px 25px",
+                fontSize: "15px",
+                textTransform: "none",
+                fontWeight: "600",
+              }}
+            >
+              Dodaj
+            </Button>
+          </Box>
+        </Modal> */}
       </div>
     </div>
   );
